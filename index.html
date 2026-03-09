@@ -175,7 +175,7 @@
             box-shadow: 0 0 20px rgba(255, 217, 102, 0.5);
         }
 
-        /* Hero Section */
+        /* Hero Section with Logo Image */
         .hero {
             padding: 5rem 0 6rem;
             background: radial-gradient(circle at 10% 20%, rgba(30, 77, 46, 0.4) 0%, var(--green-dark) 90%);
@@ -213,34 +213,21 @@
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border-radius: 30px;
-            padding: 3rem;
+            padding: 2rem;
             text-align: center;
             box-shadow: 0 30px 40px -20px rgba(0, 0, 0, 0.5);
             border: 1px solid var(--gold-dark);
-            aspect-ratio: 4/3;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            position: relative;
-            overflow: hidden;
         }
 
-        .hero-image::before {
-            content: "💰 💵 💳 📊";
-            font-size: 5rem;
-            margin-bottom: 1rem;
-            filter: drop-shadow(0 0 20px var(--gold));
-        }
-
-        .hero-image::after {
-            content: "Financial Literacy Game";
-            font-weight: 600;
-            color: var(--gold);
-            background: rgba(10, 47, 31, 0.8);
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            border: 1px dashed var(--gold);
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(255, 217, 102, 0.3);
         }
 
         .hero-cta {
@@ -337,7 +324,7 @@
             filter: drop-shadow(0 0 5px var(--gold));
         }
 
-        /* Tech stack - like in example */
+        /* Tech stack - simplified with free tools only */
         .tech-stack {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -379,7 +366,7 @@
             font-size: 0.8rem;
         }
 
-        /* Sketch gallery */
+        /* Sketch gallery with uploaded images */
         .sketch-gallery {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -399,18 +386,31 @@
         .sketch-card:hover {
             border-color: var(--gold);
             transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(255, 217, 102, 0.2);
         }
 
         .sketch-preview {
             background: rgba(255, 217, 102, 0.1);
-            height: 150px;
             border-radius: 15px;
             margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3.5rem;
-            border: 1px dashed var(--gold);
+            overflow: hidden;
+            border: 1px solid var(--gold);
+        }
+
+        .sketch-preview img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .sketch-preview img:hover {
+            transform: scale(1.05);
+        }
+
+        .sketch-card h4 {
+            color: var(--gold);
+            margin: 1rem 0 0.5rem;
         }
 
         .sketch-card p {
@@ -418,7 +418,7 @@
             font-size: 0.9rem;
         }
 
-        /* Case study section - like in example */
+        /* Case study section */
         .case-study {
             background: rgba(255, 255, 255, 0.03);
             border-radius: 30px;
@@ -469,7 +469,7 @@
             margin-top: 1rem;
         }
 
-        /* Evidence board - like in example */
+        /* Evidence board */
         .evidence-board {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 20px;
@@ -687,7 +687,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with Logo Image -->
     <section class="hero">
         <div class="container hero-grid">
             <div>
@@ -700,6 +700,7 @@
                 </div>
             </div>
             <div class="hero-image">
+                <img src="data:image/png;base64,INSERT_YOUR_LOGO_IMAGE_BASE64_HERE" alt="MoneyMaze Logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'font-size:5rem; margin-bottom:1rem;\'>💰</div><div style=\'color:var(--gold); font-size:2rem;\'>MoneyMaze</div><div style=\'color:var(--text-light);\'>Financial Literacy Game</div>'">
             </div>
         </div>
     </section>
@@ -732,7 +733,7 @@
                 </div>
             </div>
 
-            <!-- Case #1 like in example -->
+            <!-- Case #001 -->
             <div class="case-study">
                 <h3>🔍 Case #001 — The Credit Card Trap</h3>
                 <p style="color: var(--text-light); margin-bottom: 2rem;">A young professional just got their first credit card. Help them navigate the first month — or watch them fall into debt.</p>
@@ -823,101 +824,55 @@
         </div>
     </section>
 
-    <!-- 03 Technical Requirements - like in example -->
+    <!-- 03 Technical Requirements - Simplified with free tools only -->
     <section class="section" id="tech">
         <div class="container">
             <div class="section-header">
                 <h2>03 — Technical Requirements</h2>
-                <p>How MoneyMaze is built</p>
+                <p>How MoneyMaze is built (free & simple tools)</p>
             </div>
             
             <div class="tech-stack">
                 <div class="tech-category">
-                    <h4>🎮 Core Language</h4>
+                    <h4>🎮 Game Engine</h4>
                     <ul>
-                        <li>Python 3.11+</li>
-                        <li>OOP Architecture</li>
-                        <li>Type Hints</li>
-                        <li>Async where needed</li>
-                    </ul>
-                </div>
-                
-                <div class="tech-category">
-                    <h4>🖥️ Game Engine</h4>
-                    <ul>
-                        <li>Pygame CE 2.x</li>
-                        <li>Custom UI framework</li>
-                        <li>Particle effects</li>
-                        <li>Physics engine</li>
+                        <li>Pygame (Python)</li>
+                        <li>Free & open source</li>
+                        <li>2D graphics support</li>
                     </ul>
                 </div>
                 
                 <div class="tech-category">
                     <h4>💾 Data Storage</h4>
                     <ul>
-                        <li>PostgreSQL</li>
                         <li>SQLite (local)</li>
-                        <li>Redis (caching)</li>
                         <li>JSON save files</li>
+                        <li>Free database</li>
                     </ul>
                 </div>
                 
                 <div class="tech-category">
                     <h4>🎨 Art & Assets</h4>
                     <ul>
-                        <li>Figma for UI/UX</li>
-                        <li>Aseprite for sprites</li>
-                        <li>Adobe Illustrator</li>
-                        <li>SVG icons</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="tech-stack">
-                <div class="tech-category">
-                    <h4>⚙️ Backend</h4>
-                    <ul>
-                        <li>Flask + REST API</li>
-                        <li>JWT Authentication</li>
-                        <li>Swagger docs</li>
-                        <li>Celery for tasks</li>
-                    </ul>
-                </div>
-                
-                <div class="tech-category">
-                    <h4>📊 Frontend</h4>
-                    <ul>
-                        <li>React 18</li>
-                        <li>Tailwind CSS</li>
-                        <li>Chart.js for graphs</li>
-                        <li>PWA support</li>
-                    </ul>
-                </div>
-                
-                <div class="tech-category">
-                    <h4>🔧 Dev Tools</h4>
-                    <ul>
-                        <li>Git + GitHub</li>
-                        <li>VS Code / PyCharm</li>
-                        <li>Docker</li>
-                        <li>GitHub Actions</li>
+                        <li>Figma (free tier)</li>
+                        <li>Aseprite / Piskel</li>
+                        <li>GIMP (free)</li>
                     </ul>
                 </div>
                 
                 <div class="tech-category">
                     <h4>☁️ Hosting</h4>
                     <ul>
-                        <li>GitHub Pages (site)</li>
-                        <li>Railway (API)</li>
-                        <li>Itch.io (game)</li>
-                        <li>AWS S3 (assets)</li>
+                        <li>GitHub Pages (free)</li>
+                        <li>Itch.io (free)</li>
+                        <li>Railway (free tier)</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 04 Sketches / Prototype Design -->
+    <!-- 04 Sketches & Prototypes with Images -->
     <section class="section" id="design">
         <div class="container">
             <div class="section-header">
@@ -927,32 +882,40 @@
             
             <div class="sketch-gallery">
                 <div class="sketch-card">
-                    <div class="sketch-preview">🏦</div>
+                    <div class="sketch-preview">
+                        <img src="data:image/png;base64,INSERT_MAIN_MENU_IMAGE_BASE64_HERE" alt="Main Menu" onerror="this.style.display='none'; this.parentElement.innerHTML='🏠'">
+                    </div>
                     <h4>Main Menu</h4>
                     <p>Start game, load save, settings, tutorial</p>
                 </div>
                 
                 <div class="sketch-card">
-                    <div class="sketch-preview">📊</div>
+                    <div class="sketch-preview">
+                        <img src="data:image/png;base64,INSERT_BUDGET_DASHBOARD_IMAGE_BASE64_HERE" alt="Budget Dashboard" onerror="this.style.display='none'; this.parentElement.innerHTML='📊'">
+                    </div>
                     <h4>Budget Dashboard</h4>
                     <p>Income, expenses, savings goals, alerts</p>
                 </div>
                 
                 <div class="sketch-card">
-                    <div class="sketch-preview">📈</div>
+                    <div class="sketch-preview">
+                        <img src="data:image/png;base64,INSERT_INVESTMENT_SCREEN_IMAGE_BASE64_HERE" alt="Investment Screen" onerror="this.style.display='none'; this.parentElement.innerHTML='📈'">
+                    </div>
                     <h4>Investment Screen</h4>
                     <p>Stock prices, portfolio, buy/sell interface</p>
                 </div>
                 
                 <div class="sketch-card">
-                    <div class="sketch-preview">💳</div>
+                    <div class="sketch-preview">
+                        <img src="data:image/png;base64,INSERT_CREDIT_SIMULATOR_IMAGE_BASE64_HERE" alt="Credit Simulator" onerror="this.style.display='none'; this.parentElement.innerHTML='💳'">
+                    </div>
                     <h4>Credit Simulator</h4>
                     <p>Credit score, loan offers, payment options</p>
                 </div>
             </div>
             
             <div style="text-align: center; margin-top: 2rem; color: var(--text-light);">
-                <p>🎨 Hand-drawn wireframes created in Figma. Full interactive prototype available for playtesting.</p>
+                <p>🎨 UI designs created in Figma. All screens follow the same dark green + gold aesthetic.</p>
             </div>
         </div>
     </section>
@@ -970,10 +933,10 @@
                     <div class="team-photo">👨‍🎨</div>
                     <h3>Serikbay Abdulzhabbar</h3>
                     <div class="team-role">Lead Designer & Frontend Developer</div>
-                    <p class="team-desc">Passionate about creating intuitive, beautiful interfaces that make complex financial concepts accessible. Self-taught designer with 3 years of experience in UI/UX and frontend development.</p>
+                    <p class="team-desc">Passionate about creating intuitive, beautiful interfaces that make complex financial concepts accessible. Self-taught designer with 3 years of experience in UI/UX and frontend development. Loves combining education with engaging visuals.</p>
                     <div class="team-skills">
                         <span>Figma</span>
-                        <span>React</span>
+                        <span>HTML/CSS</span>
                         <span>UI/UX</span>
                         <span>Python</span>
                     </div>
@@ -983,12 +946,12 @@
                     <div class="team-photo">👨‍💻</div>
                     <h3>Abdakas Daniyar</h3>
                     <div class="team-role">Lead Developer & Game Architect</div>
-                    <p class="team-desc">Full-stack developer specializing in Pygame and educational game design. Believes that coding and finance can change the world. 4 years of experience building interactive learning tools.</p>
+                    <p class="team-desc">Full-stack developer specializing in Pygame and educational game design. Believes that coding and finance can change the world. Creates interactive learning tools that make complex topics fun and accessible.</p>
                     <div class="team-skills">
                         <span>Python</span>
                         <span>Pygame</span>
-                        <span>Flask</span>
-                        <span>SQL</span>
+                        <span>SQLite</span>
+                        <span>Git</span>
                     </div>
                 </div>
             </div>
@@ -1000,7 +963,7 @@
         </div>
     </section>
 
-    <!-- 06 Roadmap & Social Impact -->
+    <!-- 06 Development Timeline (without Social Impact) -->
     <section class="section" id="roadmap">
         <div class="container">
             <div class="section-header">
@@ -1043,31 +1006,11 @@
                     </div>
                     <div class="card">
                         <h4>Real Market Data</h4>
-                        <p>Integration with real stock APIs for authentic investment practice.</p>
+                        <p>Integration with free stock APIs for authentic investment practice.</p>
                     </div>
                     <div class="card">
                         <h4>Classroom Mode</h4>
                         <p>Teacher controls, class leaderboards, and curriculum alignment tools.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="margin-top: 3rem; background: linear-gradient(135deg, rgba(255,217,102,0.1), rgba(10,47,31,0.8)); padding: 3rem; border-radius: 30px; border: 1px solid var(--gold-dark);">
-                <h3 style="color: var(--gold);">🌍 Social Impact & Charity</h3>
-                <p style="color: var(--text-light); font-size: 1.2rem; margin: 1.5rem 0;">Financial literacy shouldn't be a privilege — it's a right.</p>
-                
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 2rem;">
-                    <div>
-                        <h4 style="color: var(--gold);">🎓 1,000+ Students</h4>
-                        <p style="color: var(--text-light);">Free access for schools in underserved communities across Kazakhstan</p>
-                    </div>
-                    <div>
-                        <h4 style="color: var(--gold);">🌱 10% Donation</h4>
-                        <p style="color: var(--text-light);">Of all Kickstarter funds go to financial education nonprofits</p>
-                    </div>
-                    <div>
-                        <h4 style="color: var(--gold);">📚 Open Source</h4>
-                        <p style="color: var(--text-light);">Core game engine will be open source for other educators to adapt</p>
                     </div>
                 </div>
             </div>
