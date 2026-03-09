@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoneyMaze · Financial Literacy Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            background-color: #f5f0e0; /* soft dollar beige */
+            color: #0a4d2e; /* dark green */
+            line-height: 1.6;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Money-themed color palette */
+        :root {
+            --green-dark: #0a4d2e;
+            --green-medium: #1e6b43;
+            --green-light: #3c8d5e;
+            --gold: #d4af37;
+            --gold-light: #f5e7c8;
+            --beige: #f5f0e0;
+            --cream: #fffaf0;
+            --brown: #8b6b4d;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--green-dark), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: var(--green-dark);
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--green-dark), var(--gold));
+            border-radius: 2px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--gold);
+            box-shadow: 0 4px 20px rgba(10, 77, 46, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 800;
+            font-size: 2rem;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, var(--green-dark), var(--gold));
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, var(--green-dark), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--green-dark);
+            font-weight: 600;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.9rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--green-dark), var(--green-medium));
+            color: white;
+            box-shadow: 0 8px 20px rgba(10, 77, 46, 0.2);
+            border: 1px solid var(--gold);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(10, 77, 46, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--green-dark);
+            color: var(--green-dark);
+        }
+
+        .btn-outline:hover {
+            background: var(--green-dark);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0 5rem;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-badge {
+            background: var(--gold);
+            color: var(--green-dark);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px solid var(--green-dark);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--green-medium);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-image {
+            background: linear-gradient(135deg, var(--cream), white);
+            border-radius: 30px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 30px 40px -20px rgba(10, 77, 46, 0.2);
+            border: 2px solid var(--gold);
+            aspect-ratio: 4/3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-image span {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-image p {
+            font-weight: 600;
+            color: var(--green-dark);
+            background: var(--beige);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            border: 1px dashed var(--gold);
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 0;
+            background: white;
+            border-radius: 50px 50px 0 0;
+            margin-top: 2rem;
+            border-top: 4px solid var(--gold);
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(10, 77, 46, 0.05);
+            transition: all 0.3s;
+            border: 1px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(10, 77, 46, 0.15);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--gold-light);
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--gold);
+        }
+
+        /* Feature lists */
+        .feature-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .feature-list li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .feature-list li:before {
+            content: "💰";
+            font-size: 1.2rem;
+        }
+
+        /* Tech tags */
+        .tech-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .tech-item {
+            background: var(--beige);
+            color: var(--green-dark);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            border: 1px solid var(--gold);
+            transition: all 0.3s;
+        }
+
+        .tech-item:hover {
+            background: var(--green-dark);
+            color: white;
+        }
+
+        /* Sketch gallery */
+        .sketch-gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .sketch-card {
+            background: var(--cream);
+            border-radius: 20px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            border: 2px solid var(--gold);
+            transition: all 0.3s;
+        }
+
+        .sketch-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(10, 77, 46, 0.1);
+        }
+
+        .sketch-preview {
+            background: linear-gradient(135deg, rgba(10,77,46,0.05), rgba(212,175,55,0.05));
+            height: 140px;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            border: 1px dashed var(--gold);
+        }
+
+        /* Team cards */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin: 3rem 0;
+        }
+
+        .team-card {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: var(--cream);
+            border-radius: 30px;
+            transition: all 0.3s;
+            border: 2px solid var(--gold);
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(10, 77, 46, 0.1);
+        }
+
+        .team-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--green-dark), var(--gold));
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: white;
+            border: 4px solid var(--gold);
+        }
+
+        .team-role {
+            color: var(--gold);
+            font-weight: 700;
+            margin: 0.8rem 0;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .timeline-item {
+            text-align: center;
+            position: relative;
+            background: var(--cream);
+            padding: 2rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--gold);
+        }
+
+        .timeline-item:after {
+            content: "→";
+            position: absolute;
+            right: -1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: var(--gold);
+            font-weight: 800;
+        }
+
+        .timeline-item:last-child:after {
+            display: none;
+        }
+
+        .timeline-week {
+            background: linear-gradient(135deg, var(--green-dark), var(--gold));
+            color: white;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            margin: 0 auto 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--green-dark), #063a1f);
+            color: var(--cream);
+            padding: 3rem 0;
+            margin-top: 2rem;
+            border-top: 4px solid var(--gold);
+        }
+
+        .footer a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .sketch-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .timeline {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline-item:after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <span class="logo-icon">💰</span>
+                <span class="logo-text">MoneyMaze</span>
+            </div>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#features">Features</a>
+                <a href="#tech">Tech</a>
+                <a href="#design">Design</a>
+                <a href="#team">Team</a>
+            </div>
+            <a href="#" class="btn btn-primary">Play Demo</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div>
+                <span class="hero-badge">💰 Financial Literacy Game</span>
+                <h1>MoneyMaze:<br>Master Your<br>Financial Future</h1>
+                <p>An interactive game that teaches teens and young adults how to budget, save, invest, and avoid debt — all through fun challenges and real-life scenarios.</p>
+                <div class="hero-cta">
+                    <a href="#" class="btn btn-primary">Support on Kickstarter</a>
+                    <a href="#" class="btn btn-outline">GitHub Repo</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <span>💵 📊 💳</span>
+                <p>Game Dashboard Preview</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 01 Project Description -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>01 — What is MoneyMaze?</h2>
+            </div>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">❓</div>
+                    <h3>The Problem</h3>
+                    <p>74% of teens don't feel confident managing money. Schools teach algebra but not how to file taxes or avoid credit card debt. Financial illiteracy costs people billions.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">💡</div>
+                    <h3>The Solution</h3>
+                    <p>MoneyMaze turns financial education into an engaging adventure. Players navigate real-life scenarios: paying rent, investing in stocks, handling unexpected expenses — without real-world consequences.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">✨</div>
+                    <h3>What Makes Us Unique</h3>
+                    <p>Adaptive difficulty, local economic contexts (Kazakhstan, US, Europe), and multiplayer challenges. Learn by doing, not by reading boring textbooks.</p>
+                </div>
+            </div>
+            
+            <div class="card" style="margin-top: 2rem;">
+                <h3>🎯 Target Audience</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 1.5rem;">
+                    <div>
+                        <h4>🧑 Teens 13-17</h4>
+                        <p>Learn budgeting basics before earning their first paycheck</p>
+                    </div>
+                    <div>
+                        <h4>👩‍🎓 Young Adults 18-25</h4>
+                        <p>Master credit scores, loans, and investments</p>
+                    </div>
+                    <div>
+                        <h4>👪 Families</h4>
+                        <p>Play together and discuss money management openly</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 02 Functional Requirements -->
+    <section class="section" id="features" style="background: var(--beige);">
+        <div class="container">
+            <div class="section-header">
+                <h2>02 — Functional Requirements</h2>
+            </div>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <h3>🎮 Game Mechanics</h3>
+                    <ul class="feature-list">
+                        <li>Monthly budget simulation with random events</li>
+                        <li>Investment mini-game (stocks, crypto, real estate)</li>
+                        <li>Credit score system that affects gameplay</li>
+                        <li>Loan shark encounters (high interest rates!)</li>
+                        <li>Tax season challenges</li>
+                        <li>Achievements for financial milestones</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>📚 Educational Features</h3>
+                    <ul class="feature-list">
+                        <li>Interactive glossary of financial terms</li>
+                        <li>Real-life scenarios (car purchase, medical bill)</li>
+                        <li>Progress tracking for parents/teachers</li>
+                        <li>Difficulty levels: Beginner to Expert</li>
+                        <li>Localized content for different countries</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>👤 User System</h3>
+                    <ul class="feature-list">
+                        <li>User registration and profiles</li>
+                        <li>Cloud save for progress</li>
+                        <li>Multiplayer leaderboards</li>
+                        <li>Parental controls and reports</li>
+                        <li>Multi-language support (EN/RU/KZ)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 03 Technical Requirements -->
+    <section class="section" id="tech">
+        <div class="container">
+            <div class="section-header">
+                <h2>03 — Tech Stack</h2>
+            </div>
+            
+            <div class="tech-cloud">
+                <span class="tech-item">Python 3.11</span>
+                <span class="tech-item">Pygame CE</span>
+                <span class="tech-item">Flask (API)</span>
+                <span class="tech-item">React (Dashboard)</span>
+                <span class="tech-item">PostgreSQL</span>
+                <span class="tech-item">SQLite</span>
+                <span class="tech-item">Docker</span>
+                <span class="tech-item">GitHub Actions</span>
+                <span class="tech-item">Figma</span>
+                <span class="tech-item">Aseprite</span>
+            </div>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <h3>🎨 Frontend</h3>
+                    <p><strong>Game Engine:</strong> Pygame CE for smooth 2D gameplay</p>
+                    <p><strong>Art Style:</strong> Modern flat design with financial aesthetics</p>
+                    <p><strong>Dashboard:</strong> React with Chart.js for progress visualization</p>
+                </div>
+                
+                <div class="card">
+                    <h3>⚙️ Backend</h3>
+                    <p><strong>API:</strong> Flask RESTful with JWT auth</p>
+                    <p><strong>Database:</strong> PostgreSQL for production, SQLite for dev</p>
+                    <p><strong>Analytics:</strong> Custom tracking for educational progress</p>
+                </div>
+                
+                <div class="card">
+                    <h3>🚀 Deployment</h3>
+                    <p><strong>Game:</strong> Itch.io + GitHub Releases</p>
+                    <p><strong>Website:</strong> GitHub Pages</p>
+                    <p><strong>API:</strong> Railway / Render</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 04 Sketches / Prototype Design -->
+    <section class="section" id="design" style="background: var(--beige);">
+        <div class="container">
+            <div class="section-header">
+                <h2>04 — Design Prototypes</h2>
+            </div>
+            
+            <div class="sketch-gallery">
+                <div class="sketch-card">
+                    <div class="sketch-preview">🏠</div>
+                    <h4>Main Menu</h4>
+                    <p>Start game, load save, settings</p>
+                </div>
+                
+                <div class="sketch-card">
+                    <div class="sketch-preview">📊</div>
+                    <h4>Budget Dashboard</h4>
+                    <p>Income, expenses, savings overview</p>
+                </div>
+                
+                <div class="sketch-card">
+                    <div class="sketch-preview">📈</div>
+                    <h4>Investment Mini-game</h4>
+                    <p>Buy/sell stocks, watch market trends</p>
+                </div>
+                
+                <div class="sketch-card">
+                    <div class="sketch-preview">🏦</div>
+                    <h4>Loan Shark Encounter</h4>
+                    <p>High-stakes borrowing decisions</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <p>🎨 All sketches created in Figma. Full interactive prototype available upon request.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 05 About the Authors -->
+    <section class="section" id="team">
+        <div class="container">
+            <div class="section-header">
+                <h2>05 — Meet the Team</h2>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-photo">👨‍💻</div>
+                    <h3>Abdakas Daniyar</h3>
+                    <div class="team-role">Lead Developer / Game Designer</div>
+                    <p>Python & Pygame expert. Passionate about making financial education accessible through interactive gameplay. 5 years of experience in edtech.</p>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-photo">🎨</div>
+                    <h3>Serikbay Abdulzhabbar</h3>
+                    <div class="team-role">UI/UX Designer / Researcher</div>
+                    <p>Creates intuitive interfaces and researches financial literacy curricula. Ensures every game mechanic is both fun and educational.</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem; padding: 2rem; background: var(--cream); border-radius: 20px; border: 1px solid var(--gold);">
+                <h3>💪 Our Motivation</h3>
+                <p>We believe that financial literacy is a fundamental right. Our mission is to help the next generation avoid debt traps and build wealth through smart habits — all while having fun.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 06 Additional Information -->
+    <section class="section" style="background: linear-gradient(135deg, var(--green-dark), #063a1f); color: white;">
+        <div class="container">
+            <div class="section-header">
+                <h2 style="color: white;">06 — Roadmap & Social Impact</h2>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item" style="background: rgba(255,255,255,0.1); border-color: var(--gold);">
+                    <div class="timeline-week">1-2</div>
+                    <h4 style="color: white;">Concept</h4>
+                    <p style="color: var(--gold-light);">Game design doc, paper prototypes</p>
+                </div>
+                
+                <div class="timeline-item" style="background: rgba(255,255,255,0.1); border-color: var(--gold);">
+                    <div class="timeline-week">3-4</div>
+                    <h4 style="color: white;">MVP</h4>
+                    <p style="color: var(--gold-light);">Core budget simulation, basic UI</p>
+                </div>
+                
+                <div class="timeline-item" style="background: rgba(255,255,255,0.1); border-color: var(--gold);">
+                    <div class="timeline-week">5-6</div>
+                    <h4 style="color: white;">Features</h4>
+                    <p style="color: var(--gold-light);">Investment mini-game, multiplayer</p>
+                </div>
+                
+                <div class="timeline-item" style="background: rgba(255,255,255,0.1); border-color: var(--gold);">
+                    <div class="timeline-week">7-8</div>
+                    <h4 style="color: white;">Launch</h4>
+                    <p style="color: var(--gold-light);">Testing, polish, release</p>
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem;">
+                <div class="card" style="background: rgba(255,255,255,0.1); color: white; border-color: var(--gold);">
+                    <h3 style="color: var(--gold);">🔮 Future Improvements</h3>
+                    <ul style="list-style: none; color: white;">
+                        <li>✓ Mobile app (iOS/Android)</li>
+                        <li>✓ Real market data integration</li>
+                        <li>✓ Classroom management tools</li>
+                        <li>✓ Scholarship tournaments</li>
+                    </ul>
+                </div>
+                
+                <div class="card" style="background: rgba(255,255,255,0.1); color: white; border-color: var(--gold);">
+                    <h3 style="color: var(--gold);">❤️ Social Mission</h3>
+                    <p>Free version for schools and orphanages. Partnerships with financial literacy nonprofits. 10% of Kickstarter funds go to financial education programs in rural areas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="logo" style="justify-content: center; margin-bottom: 2rem;">
+                <span class="logo-icon">💰</span>
+                <span style="color: white; -webkit-text-fill-color: white;">MoneyMaze</span>
+            </div>
+            
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">GitHub</a>
+                <a href="#">Demo</a>
+                <a href="#">Contact</a>
+            </div>
+            
+            <p style="margin: 2rem 0; opacity: 0.8;">Project Website: moneymaze.github.io (coming soon)</p>
+            <p style="opacity: 0.6;">© 2024 MoneyMaze Team · Abdakas Daniyar & Serikbay Abdulzhabbar</p>
+        </div>
+    </footer>
+</body>
+</html>
